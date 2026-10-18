@@ -1,0 +1,22 @@
+name: "First Workflow"
+on: workflow_dispatch
+jobs:
+  first-job:
+    runs on: ubuntu-latest
+    steps:
+      - name: "Hello World"
+        run: echo "Hello, World"
+        description: "This step prints 'Hello, World' to the console."
+      - name: "Print Current Date"
+        run: date
+        description: "This step prints the current date and time to the console."
+  second-job:
+    depends-on: first-job
+    runs on: ubuntu-latest
+    steps:
+      - name: "List Files"
+        run: ls -la
+        description: "This step lists all files and directories in the current working directory."
+      - name: "Print Working Directory"
+        run: pwd
+        description: "This step prints the current working directory to the console."

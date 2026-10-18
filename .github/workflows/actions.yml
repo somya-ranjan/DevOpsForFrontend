@@ -1,0 +1,21 @@
+name: "Actions Workflow"
+on:
+  push:
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout"
+        uses: actions/checkout@v3
+        with:
+          node-version: "24"
+          cache: "bun"
+
+      - name: "Install Dependencies"
+        run: bun install
+
+      - name: "Run Tests"
+        run: bun test
+
+      - name: "Build Project"
+        run: bun build

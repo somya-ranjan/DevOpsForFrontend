@@ -6,7 +6,7 @@ jobs:
 
     steps:
       - name: "Checkout Repository"
-        uses: accounts/checkout@v7
+        uses: actions/checkout@v7
 
       - name: "Validate html file"
         run: test -f index.html || (echo "index.html file is missing!" && exit 1)

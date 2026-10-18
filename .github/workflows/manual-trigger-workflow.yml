@@ -15,3 +15,10 @@ jobs:
         run: ls -la
       - name: "Print Working Directory"
         run: pwd
+  third-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check Disk Usage"
+        run: df -h
+      - name: "Print Environment Variables"
+        run: printenv

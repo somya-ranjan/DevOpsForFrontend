@@ -1,0 +1,12 @@
+name: "Setup Conditional Jobs"
+on:
+  push:
+jobs:
+  setup-conditional-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v7
+
+      - name: "Setup Conditional Jobs"
+        run: echo "Setting up conditional jobs..."

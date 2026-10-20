@@ -1,0 +1,16 @@
+name: "Conditional Jobs"
+on:
+  workflow_run:
+    workflows: ["Setup Conditional Jobs"]
+    types:
+      - completed
+jobs:
+  conditional-jobs:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v7
+
+      - name: "Run Conditional Jobs"
+        run: echo "Running conditional jobs..."

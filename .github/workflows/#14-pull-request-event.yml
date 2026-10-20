@@ -1,9 +1,10 @@
 name: "#14- Pull Request Event"
 on:
-  pull_request:
-    branches:
-      - main
-      - dev
+  workflow_dispatch:
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - dev
 jobs:
   pull-request-event:
     runs-on: ubuntu-latest

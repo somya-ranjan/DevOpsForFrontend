@@ -10,6 +10,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+
     steps:
       - name: "Checkout Repository"
         uses: actions/checkout@v7
@@ -34,6 +35,9 @@ jobs:
       - name: "Install Dependencies"
         run: bun install
 
+      - name: "Check ESLint"
+        run: bun run lint
+
       - name: "Report ESLint issues in pull request"
         uses: reviewdog/action-eslint@v1
         with:
@@ -41,6 +45,3 @@ jobs:
           reporter: github-pr-review
           level: warning
           fail_level: warning
-
-      - name: "Check ESLint"
-        run: bun run lint

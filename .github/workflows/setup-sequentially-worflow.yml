@@ -1,0 +1,15 @@
+name: "Validate Files || Setup Sequentially Workflow"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  setup-sequentially-workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v7
+
+      - name: "Setup Sequentially"
+        run: echo "Setting up sequentially workflow..."

@@ -1,0 +1,16 @@
+name: "Validate Files || Sequentially Workflow"
+on:
+  workflow_run:
+    workflows: ["Validate Files || Setup Sequentially Workflow"]
+    types:
+      - completed
+
+jobs:
+  sequentially-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v7
+
+      - name: "Run Sequentially Workflow"
+        run: echo "Running sequentially workflow..."

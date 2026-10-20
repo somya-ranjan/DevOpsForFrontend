@@ -1,8 +1,9 @@
 name: "On Event Workflow"
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
 jobs:
   first-job:
     runs-on: ubuntu-latest

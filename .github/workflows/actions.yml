@@ -1,6 +1,7 @@
 name: "Actions Workflow"
 on:
-  push:
+  # push:
+  workflow_dispatch:
 jobs:
   first-job:
     runs-on: ubuntu-24.04

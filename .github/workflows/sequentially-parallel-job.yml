@@ -1,0 +1,37 @@
+name: "Validate Files || Sequentially Parallel Job"
+on: push
+jobs:
+  validate-html-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v7
+
+      - name: "Validate html file"
+        run: test -f index.html # || (echo "index.html file is missing!" && exit 1)
+
+  validate-js-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v7
+
+      - name: "Validate Js file"
+        run: test -f index.js # || (echo "index.js file is missing!" && exit 1)
+
+  validate-code:
+    runs-on: ubuntu-latest
+    # This job will run after the successful completion of both validate-html-file and validate-js-file jobs.
+    needs: [validate-html-file, validate-js-file]
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v7
+
+      - name: "Validate html file code"
+        run: npx htmlhint index.html # || (echo "index.html file has syntax errors!" && exit 1)
+
+      - name: "Validate Js file Code"
+        run: node --check index.js # || (echo "index.js file has syntax errors!" && exit 1)

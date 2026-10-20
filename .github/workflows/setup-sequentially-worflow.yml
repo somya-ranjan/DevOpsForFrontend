@@ -1,4 +1,4 @@
-name: "Validate Files || Setup Sequentially Workflow"
+name: "Setup Sequentially Workflow"
 on:
   push:
     branches:
@@ -13,3 +13,6 @@ jobs:
 
       - name: "Setup Sequentially"
         run: echo "Setting up sequentially workflow..."
+
+      - name: "Workflow Failed Intentionally"
+        run: exit 1

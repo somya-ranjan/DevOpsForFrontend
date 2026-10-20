@@ -1,0 +1,15 @@
+name: "#14- Pull Request Event"
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+jobs:
+  pull-request-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v7
+
+      - name: "Pull Request Event"
+        run: echo "Pull request event triggered for branch ${{ github.head_ref }} targeting ${{ github.base_ref }}"

@@ -1,7 +1,9 @@
 #13 React App CI with GitHub Actions
 
 name: "React App CI"
-on: push
+on:
+  # push:
+  workflow_dispatch:
 
 jobs:
   build:

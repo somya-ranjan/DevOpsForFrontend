@@ -1,7 +1,7 @@
-name: "Conditional Jobs"
+name: "#12 Conditional Jobs"
 on:
   workflow_run:
-    workflows: ["Setup Conditional Jobs"]
+    workflows: ["#12 Setup Conditional Jobs"]
     types:
       - completed
 jobs:

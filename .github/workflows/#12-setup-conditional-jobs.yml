@@ -1,4 +1,4 @@
-name: "Setup Conditional Jobs"
+name: "#12 Setup Conditional Jobs"
 on:
   push:
 jobs:
@@ -10,3 +10,6 @@ jobs:
 
       - name: "Setup Conditional Jobs"
         run: echo "Setting up conditional jobs..."
+
+      - name: "Fail the Job to Test Conditional Execution"
+        run: exit 1

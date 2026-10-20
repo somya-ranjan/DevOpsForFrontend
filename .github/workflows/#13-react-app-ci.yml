@@ -1,9 +1,7 @@
 #13 React App CI with GitHub Actions
 
 name: "React App CI"
-on:
-  # push:
-  workflow_dispatch:
+on: push
 
 jobs:
   build:
@@ -34,3 +32,14 @@ jobs:
 
       - name: "build"
         run: bun run build
+
+      - name: "Upload Build Artifacts"
+        uses: actions/upload-artifact@v4
+        with:
+          name: "build-artifacts"
+          path: dist/
+
+      - name: "Download Build Artifacts"
+        uses: actions/download-artifact@v4
+        with:
+          name: "build-artifacts"

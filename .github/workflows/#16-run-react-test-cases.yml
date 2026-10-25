@@ -38,7 +38,7 @@ jobs:
 
   test:
     runs-on: ubuntu-24.04
-    needs: lint
+    needs: setup
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -51,6 +51,8 @@ jobs:
         env:
           JEST_JUNIT_OUTPUT_DIR: test-results
           JEST_JUNIT_OUTPUT_NAME: jest-junit.xml
+          JEST_JUNIT_CLASSNAME: "{classname}"
+          JEST_JUNIT_TITLE: "{title}"
 
       - name: Publish test report
         if: always() && hashFiles('test-results/jest-junit.xml') != ''
@@ -70,7 +72,7 @@ jobs:
 
   build:
     runs-on: ubuntu-24.04
-    needs: test
+    needs: [lint, test]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7

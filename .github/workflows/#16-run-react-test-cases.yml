@@ -1,0 +1,89 @@
+name: "#16/17/18- Run React Test Cases"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+# This prevents duplicate workflow runs for the same pull request when multiple commits are pushed.
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+#   cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  setup:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Bun dependencies
+        uses: ./.github/actions/setup-bun
+
+  lint:
+    runs-on: ubuntu-24.04
+    needs: setup
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Bun dependencies
+        uses: ./.github/actions/setup-bun
+
+      - name: Run ESLint
+        run: bun run lint
+
+  test:
+    runs-on: ubuntu-24.04
+    needs: lint
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Bun dependencies
+        uses: ./.github/actions/setup-bun
+
+      - name: Run React test cases
+        run: bun run test --reporters=default --reporters=jest-junit
+        env:
+          JEST_JUNIT_OUTPUT_DIR: test-results
+          JEST_JUNIT_OUTPUT_NAME: jest-junit.xml
+
+      - name: Publish test report
+        if: always() && hashFiles('test-results/jest-junit.xml') != ''
+        uses: test-summary/action@v2
+        with:
+          paths: test-results/jest-junit.xml
+          show: all
+
+      - name: Upload test report
+        if: always() && hashFiles('test-results/jest-junit.xml') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-app-test-report
+          path: test-results/jest-junit.xml
+          if-no-files-found: ignore
+          retention-days: 7
+
+  build:
+    runs-on: ubuntu-24.04
+    needs: test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Bun dependencies
+        uses: ./.github/actions/setup-bun
+
+      - name: Build React app
+        run: bun run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-app-build
+          path: dist/
+          retention-days: 7

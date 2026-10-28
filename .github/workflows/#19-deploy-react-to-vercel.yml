@@ -21,12 +21,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-        # with:
-        # path: devops-for-frontend
+        with:
+          path: devops-for-frontend
 
       - name: "Install Vercel CLI"
         run: npm install -g vercel
 
       - name: "Deploy to Vercel"
-        # working-directory: devops-for-frontend
+        working-directory: devops-for-frontend
         run: vercel --prod --yes

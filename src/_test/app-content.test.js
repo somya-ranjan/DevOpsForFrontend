@@ -6,10 +6,10 @@ describe("App content", () => {
   it("shows the getting started and documentation sections", () => {
     render(<App />);
 
-    expect(screen.getByRole("heading", { name: "Get started" })).toBeTruthy();
     expect(
-      screen.getByRole("heading", { name: "Documentation" }),
+      screen.getByRole("heading", { name: "Hello, Get started" }),
     ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Documentation" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Explore Vite" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Learn more" })).toBeTruthy();
   });

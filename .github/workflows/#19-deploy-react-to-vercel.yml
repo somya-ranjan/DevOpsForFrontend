@@ -1,0 +1,23 @@
+name: "#19/20- Deploy React to Vercel"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    uses: ./.github/workflows/#16-run-react-test-cases.yml
+
+  deploying-to-vercel:
+    needs: run-tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: "Install Vercel CLI"
+        run: npm install -g vercel
+
+      - name: "Deploy to Vercel"
+        run: vercel --prod --yes --token ${{ secrets.VERCEL_DEVOPSFORFRONTEND_TOKEN }}

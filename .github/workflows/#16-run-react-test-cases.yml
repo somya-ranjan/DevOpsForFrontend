@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_call:
 
 # This prevents duplicate workflow runs for the same pull request when multiple commits are pushed.
 # concurrency:

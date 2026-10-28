@@ -1,8 +1,9 @@
 name: "#15- Run ESLint in React App"
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
   eslint-check:

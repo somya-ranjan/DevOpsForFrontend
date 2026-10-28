@@ -12,12 +12,21 @@ jobs:
   deploying-to-vercel:
     needs: run-tests
     runs-on: ubuntu-24.04
+
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      # VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      # VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        # with:
+        # path: devops-for-frontend
 
       - name: "Install Vercel CLI"
         run: npm install -g vercel
 
       - name: "Deploy to Vercel"
-        run: vercel --prod --yes --token ${{ secrets.VERCEL_DEVOPS_FOR_FRONTEND_TOKEN }}
+        # working-directory: devops-for-frontend
+        run: vercel --prod --yes

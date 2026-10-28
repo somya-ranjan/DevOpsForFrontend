@@ -24,6 +24,12 @@ jobs:
         with:
           path: devops-for-frontend
 
+      - name: Download React build
+        uses: actions/download-artifact@v7
+        with:
+          name: react-app-build
+          path: devops-for-frontend/dist
+
       - name: "Install Vercel CLI"
         run: npm install -g vercel
 

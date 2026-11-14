@@ -1,9 +1,10 @@
 name: "#19/20- Deploy React to Vercel"
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   run-tests:

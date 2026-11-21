@@ -1,0 +1,39 @@
+name: "#34 Deploy React App to AWS EC2 with Nginx"
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  code-check:
+    uses: ./.github/workflows/#16-run-react-test-cases.yml
+
+  deploy-to-ec2:
+    needs: code-check
+    runs-on: ubuntu-latest
+    env:
+      AWS_EC2_HOST_KEY: ${{ secrets.AWS_EC2_HOST_KEY }}
+      AWS_ES2_SSH_KEY: ${{ secrets.AWS_ES2_SSH_KEY }}
+
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$AWS_ES2_SSH_KEY" | tr -d '\r' > ~/.ssh/ec2.pem
+          chmod 600 ~/.ssh/ec2.pem
+          ssh-keyscan -H "$AWS_EC2_HOST_KEY" >> ~/.ssh/known_hosts
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: react-app-build
+          path: dist
+
+      - name: Deploy To EC2
+        run: |
+          ssh -i ~/.ssh/ec2.pem "ec2-user@$AWS_EC2_HOST_KEY" \
+            'mkdir -p /home/ec2-user/frontend/react-app/dist'
+
+          scp -i ~/.ssh/ec2.pem -r dist/. \
+            "ec2-user@$AWS_EC2_HOST_KEY:/home/ec2-user/frontend/react-app/dist/"

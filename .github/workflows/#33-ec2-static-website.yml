@@ -22,7 +22,7 @@ jobs:
           ssh-keyscan -H "$AWS_EC2_HOST_KEY" >> ~/.ssh/known_hosts
 
           ssh -i ~/.ssh/ec2.pem "ec2-user@$AWS_EC2_HOST_KEY" 'bash -se' <<'EOF'
-          APP="/home/ec2-user/ec2-webapp"
+          APP="/home/ec2-user/frontend/static-website"
           REPO_URL="https://github.com/somya-ranjan/MST-Website.git"
           if [ -d "$APP/.git" ]; then
             cd "$APP"

@@ -1,0 +1,33 @@
+name: "#33 Deploy Static Website to EC2"
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_EC2_HOST_KEY: ${{ secrets.AWS_EC2_HOST_KEY }}
+      AWS_ES2_SSH_KEY: ${{ secrets.AWS_ES2_SSH_KEY }}
+
+    steps:
+      - name: Deploy To EC2
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$AWS_ES2_SSH_KEY" | tr -d '\r' > ~/.ssh/ec2.pem
+          chmod 600 ~/.ssh/ec2.pem
+          ssh-keyscan -H "$AWS_EC2_HOST_KEY" >> ~/.ssh/known_hosts
+
+          ssh -i ~/.ssh/ec2.pem "ec2-user@$AWS_EC2_HOST_KEY" 'bash -se' <<'EOF'
+          APP="/home/ec2-user/frontend/static-website"
+          REPO_URL="https://github.com/somya-ranjan/MST-Website.git"
+          if [ -d "$APP/.git" ]; then
+            cd "$APP"
+            git pull --ff-only origin master
+          else
+            git clone -b master "$REPO_URL" "$APP"
+          fi
+          EOF

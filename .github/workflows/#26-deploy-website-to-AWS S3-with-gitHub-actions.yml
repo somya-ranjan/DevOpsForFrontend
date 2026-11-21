@@ -2,9 +2,10 @@
 
 name: "#26/27 Deploy Website to AWS S3"
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
 
 jobs:
   run-tests:
